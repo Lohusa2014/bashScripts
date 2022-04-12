@@ -1,0 +1,21 @@
+#!/bin/bash
+​
+# Author: Lorena Powers
+# This script will retrieve the DS record information for a domain
+# Usage : run this script followed by a doomain name i.e ./domain-ds-record domainname.com
+​
+​
+​
+ds=`dig in cds $1 | grep 'ANSWER SECTION' -A 2 | tail -n 2`
+​
+KeyID=`echo $ds | awk '{print $5}'`
+echo KeyID: $KeyID
+​
+algorithm=`echo $ds | awk '{print $6}'`
+echo Algorithm: $algorithm
+​
+digestType=`echo $ds | awk '{print $7}'`
+echo Digest Type: $digestType
+​
+digest=`echo $ds | awk '{print $8, $9}'`
+echo Digest: $digest
