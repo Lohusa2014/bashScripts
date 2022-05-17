@@ -1,0 +1,21 @@
+# !/bin/bash
+# This script will query all the domains in a list to retrieve their default A record 
+#
+#
+
+
+if [ $# -lt 1 ]; then
+        echo ""
+        echo "This script will run a certain number of queries against a domain list"
+        echo "--- Incorrect Syntax ----"
+        echo "Usage: $0 <file of FQDNs>"
+        echo "Example: $0 domains.txt"
+        echo ""
+        exit
+fi
+
+if [ -f $1 ]; then
+        dig -f $1 +noall +answer
+else
+        dig $1 +short
+fi
