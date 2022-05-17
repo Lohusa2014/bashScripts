@@ -1,0 +1,21 @@
+#!/bin/bash 
+
+# $domain is registered at $registrar by $registrant. The web server $ip is owned by $ipowner. 
+
+# This script will display a domain's registrar, registrant, and finally the owner of the IP of the owner
+
+# Finding out the registrar for a domain
+
+# find out the registrar for a given domain
+rg=`whois $1 | grep 'Registrar:' | tail -n 1`
+
+# Find out the Registrant by a give domain
+rt=`whois $1 | grep 'Registrant Organization:'`
+
+# Find the IPs a domain point to
+ips=`dig $1 a +short`
+
+# Find out the owner of the IP given within ips
+owr=`whois $ips | grep 'OrgName:'`
+
+echo "$1 is registered at $rg by $rt. The web server $ips is owned by $owr"
