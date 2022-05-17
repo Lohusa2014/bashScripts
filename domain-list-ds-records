@@ -1,0 +1,38 @@
+#!/bin/bash
+
+# Author: Lorena Powers
+# This script will retrieve the DS record information for a domain list
+# Usage : run this script followed by a doomain list called domains.txt i.e ./domain-ds-record domainname.com
+
+
+if [ $# -lt 1 ]; then
+        echo ""
+        echo "This script will retrieve the DS records against a domain list"
+        echo "--- Incorrect Syntax ----"
+        echo "Usage: $0 <file of FQDNs>"
+        echo "Example: $0 domains.txt"
+        echo ""
+        exit
+fi
+
+while read -r domain
+do
+        ds=`dig in cds $domain | grep 'ANSWER SECTION' -A 2 | tail -n 2`
+
+	echo Domain Name: $i $domain
+	
+	KeyID=`echo $ds | awk '{print $5}'`
+	echo KeyID: $KeyID
+
+	algorithm=`echo $ds | awk '{print $6}'`
+	echo Algorithm: $algorithm
+
+	digestType=`echo $ds | awk '{print $7}'`
+	echo Digest Type: $digestType
+
+	digest=`echo $ds | awk '{print $8, $9}'`
+	echo Digest: $digest
+	echo ""
+	echo""
+
+done < domains.txt
