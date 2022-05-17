@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# This script will run a certain amount of queries against a domain
+
+
+echo What is the domain name you want to query?
+read domain
+
+echo How many times would you like to query this domain?
+read tmx
+
+for ((i=1; i<=$tmx; i++))
+do
+	ips=`dig +short a $domain`
+	echo "$i Querying $domain domain IP Result: $ips "
+done
+
